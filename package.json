@@ -1,0 +1,29 @@
+{
+  "name": "twitter-auth-to-firebase",
+  "version": "1.0.0",
+  "description": "Save twitter auth to a firebase db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisMayo/twitter-auth-to-firebase.git"
+  },
+  "keywords": [
+    "twitter",
+    "auth",
+    "firestore",
+    "nodejs"
+  ],
+  "author": "LuisMayo",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/LuisMayo/twitter-auth-to-firebase/issues"
+  },
+  "homepage": "https://github.com/LuisMayo/twitter-auth-to-firebase#readme",
+  "dependencies": {
+    "firebase-admin": "^8.13.0",
+    "login-with-twitter": "^1.2.2"
+  }
+}

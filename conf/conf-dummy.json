@@ -2,5 +2,11 @@
     "consumerKey": "consumerKey",
     "consumerSecret": "consumerSecret",
     "callbackUrl": "callbackUrl",
-    "secretCookie": "secretCookie"
+    "secretCookie": "secretCookie",
+    "certificate": {
+      "certPath": "./cer.pem",
+      "keyPath": "./key.pem"
+    },
+    "port": 80,
+    "httpsPort": 443
   }

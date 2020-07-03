@@ -5,6 +5,7 @@ const memorystore = require('memorystore');
 const session = require('express-session');
 
 const admin = require('firebase-admin');
+const { config } = require('process');
 admin.initializeApp({
     credential: admin.credential.applicationDefault()
 });
@@ -13,6 +14,9 @@ const db = admin.firestore();
 
 
 const conf = JSON.parse(readFileSync('./conf/conf.json', { encoding: 'utf-8' }));
+const privateKey  = readFileSync(conf.certificate.keyPath, 'utf8');
+const certificate = readFileSync(conf.certificate.certPath, 'utf8');
+const credentials = {key: privateKey, cert: certificate};
 const app = express();
 const store = memorystore(session)
 
@@ -85,3 +89,10 @@ app.get('/logout', (req, res) => {
     let deleteDoc = db.collection('twusers').doc(req.session.user.userId).delete();
     res.redirect('/');
 });
+
+const httpServer = http.createServer(app);
+httpServer.listen(conf.port)
+if (conf.httpsPort) {
+    const httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(conf.httpsPort);
+}

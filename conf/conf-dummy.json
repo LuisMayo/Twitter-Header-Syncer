@@ -7,6 +7,7 @@
       "certPath": null,
       "keyPath": null
     },
+    "collection": "twusers",
     "port": 80,
     "httpsPort": null,
     "appurlComment": "Final application URL",

@@ -77,7 +77,7 @@ app.get('/twitter/callback', (req, res) => {
         //   userToken,
         //   userTokenSecret
         // }
-        let addDoc = db.collection('twusers').doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString() }).then(ref => {
+        let addDoc = db.collection(conf.collection).doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString() }).then(ref => {
             if (conf.appurl) {
                 res.redirect(conf.appurl)
             } else {
@@ -90,7 +90,7 @@ app.get('/twitter/callback', (req, res) => {
 
 app.get('/logout', (req, res) => {
     try {
-     let deleteDoc = db.collection('twusers').doc(req.session.user.userId).delete();
+     let deleteDoc = db.collection(conf.collection).doc(req.session.user.userId).delete();
     } catch(e) {
         
     }

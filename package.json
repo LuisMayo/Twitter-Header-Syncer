@@ -23,7 +23,10 @@
   },
   "homepage": "https://github.com/LuisMayo/twitter-auth-to-firebase#readme",
   "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "firebase-admin": "^8.13.0",
-    "login-with-twitter": "^1.2.2"
+    "login-with-twitter": "^1.2.2",
+    "memorystore": "^1.6.2"
   }
 }

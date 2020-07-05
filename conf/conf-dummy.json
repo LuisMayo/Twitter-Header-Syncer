@@ -1,12 +1,16 @@
 {
-    "consumerKey": "consumerKey",
-    "consumerSecret": "consumerSecret",
-    "callbackUrl": "callbackUrl",
-    "secretCookie": "secretCookie",
+    "consumerKey": null,
+    "consumerSecret": null,
+    "callbackUrl": null,
+    "secretCookie": null,
     "certificate": {
-      "certPath": "./cer.pem",
-      "keyPath": "./key.pem"
+      "certPath": null,
+      "keyPath": null
     },
     "port": 80,
-    "httpsPort": 443
+    "httpsPort": null,
+    "appurlComment": "Final application URL",
+    "appurl": null,
+    "appFileComment": "Final application html file",
+    "appFile":"logged.html"
   }

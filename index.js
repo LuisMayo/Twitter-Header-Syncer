@@ -78,7 +78,11 @@ app.get('/twitter/callback', (req, res) => {
         //   userTokenSecret
         // }
         let addDoc = db.collection('twusers').doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString() }).then(ref => {
-            res.sendFile(__dirname + '/logged.html');
+            if (conf.appurl) {
+                res.redirect(conf.appurl)
+            } else {
+                res.sendFile(__dirname + '/' + conf.appFile);
+            }
         });
         // Redirect to whatever route that can handle your new Twitter login user details!
     });

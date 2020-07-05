@@ -86,7 +86,11 @@ app.get('/twitter/callback', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-    let deleteDoc = db.collection('twusers').doc(req.session.user.userId).delete();
+    try {
+     let deleteDoc = db.collection('twusers').doc(req.session.user.userId).delete();
+    } catch(e) {
+        
+    }
     res.redirect('/');
 });
 

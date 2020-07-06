@@ -1,2 +1,2 @@
-# twitter-auth-to-firebase
-Auth twitter and save credentials onto firebase. This project is intended to serve as a backbone for larger projects to be built onto it
+# login-with-tw-and-save-url
+Auth twitter and save credentials onto firebase, then ask for an URL ro sync, made with https://github.com/LuisMayo/witter-auth-to-firebase/

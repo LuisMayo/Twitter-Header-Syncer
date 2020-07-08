@@ -35,6 +35,10 @@ app.use(session({
     secret: conf.secretCookie
 }));
 
+app.use(express.urlencoded({
+    extended: true
+}));
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 });
@@ -77,12 +81,8 @@ app.get('/twitter/callback', (req, res) => {
         //   userToken,
         //   userTokenSecret
         // }
-        let addDoc = db.collection(conf.collection).doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString() }).then(ref => {
-            if (conf.appurl) {
-                res.redirect(conf.appurl)
-            } else {
-                res.sendFile(__dirname + '/' + conf.appFile);
-            }
+        let addDoc = db.collection(conf.collection).doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString()}).then(ref => {
+            redirectToLogged(res);
         });
         // Redirect to whatever route that can handle your new Twitter login user details!
     });
@@ -97,6 +97,19 @@ app.get('/twitter/logout', (req, res) => {
     res.redirect('/');
 });
 
+app.get('/twitter/changeurl', (req, res) => {
+    const url = req.body.url;
+    try {
+    db.collection(conf.collection).doc(req.session.user.userId).set({
+        url: url
+      }, {merge: true});
+    } catch (e) {
+        res.redirect('/');
+    }
+    redirectToLogged(res);
+});
+
+
 const httpServer = http.createServer(app);
 httpServer.listen(conf.port)
 if (conf.httpsPort) {
@@ -106,3 +119,12 @@ if (conf.httpsPort) {
     const httpsServer = https.createServer(credentials, app);
     httpsServer.listen(conf.httpsPort);
 }
+function redirectToLogged(res) {
+    if (conf.appurl) {
+        res.redirect(conf.appurl);
+    }
+    else {
+        res.sendFile(__dirname + '/' + conf.appFile);
+    }
+}
+

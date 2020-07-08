@@ -97,7 +97,7 @@ app.get('/twitter/logout', (req, res) => {
     res.redirect('/');
 });
 
-app.get('/twitter/changeurl', (req, res) => {
+app.post('/twitter/changeurl', (req, res) => {
     const url = req.body.url;
     try {
     db.collection(conf.collection).doc(req.session.user.userId).set({

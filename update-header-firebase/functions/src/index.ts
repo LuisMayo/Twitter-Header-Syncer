@@ -1,4 +1,7 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import * as Twitter from 'twitter';
+import { imageToBase64 } from 'image-to-base64';
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -7,7 +10,28 @@ import * as functions from 'firebase-functions';
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
-functions.pubsub.schedule('every 24 hours').onRun((ctx) => {
 
+
+admin.initializeApp(functions.config().firebase);
+
+const db = admin.firestore();
+functions.pubsub.schedule('every 24 hours').onRun((ctx) => {
+  db.collection('twusers').get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        UpdateBanner(doc);
+      });
+    }).catch(e => {
+      console.error(e);
+    });
 });
-// functions.https.onRequest()
+function UpdateBanner(doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) {
+  const client = new Twitter({
+    consumer_key: process.env.consumer_key as string,
+    consumer_secret: process.env.consumer_secret as string,
+    access_token_key: doc.get('userToken'),
+    access_token_secret: doc.get('userTokenSecret')
+  });
+  imageToBase64(doc.get('url')).then(string => client.post('account/update_profile_banner', { banner: string }))
+    .catch(e => console.error(e));
+}

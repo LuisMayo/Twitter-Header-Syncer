@@ -27,8 +27,8 @@ exports.scheduledUpdate = functions.pubsub.schedule('every 24 hours').onRun((ctx
 });
 function UpdateBanner(doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) {
   const client = new Twitter({
-    consumer_key: process.env.consumer_key as string,
-    consumer_secret: process.env.consumer_secret as string,
+    consumer_key: functions.config().twitter.key,
+    consumer_secret: functions.config().twitter.secret,
     access_token_key: doc.get('userToken'),
     access_token_secret: doc.get('userTokenSecret')
   });

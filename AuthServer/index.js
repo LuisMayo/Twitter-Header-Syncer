@@ -40,6 +40,7 @@ app.use(express.urlencoded({
 }));
 
 app.get('/', (req, res) => {
+    req.session.directory = req.get('X-Real-Directory') || '/';
     res.sendFile(__dirname + '/index.html')
 });
 
@@ -81,7 +82,7 @@ app.get('/twitter/callback', (req, res) => {
         //   userToken,
         //   userTokenSecret
         // }
-        let addDoc = db.collection(conf.collection).doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString()}).then(ref => {
+        let addDoc = db.collection(conf.collection).doc(user.userId).set({ ...user, lastUpdate: new Date().toISOString()}, {merge: true}).then(ref => {
             redirectToLogged(res);
         });
         // Redirect to whatever route that can handle your new Twitter login user details!
@@ -94,7 +95,7 @@ app.get('/twitter/logout', (req, res) => {
     } catch(e) {
         
     }
-    res.redirect('/');
+    res.redirect(req.session.directory);
 });
 
 app.post('/twitter/changeurl', (req, res) => {
@@ -104,7 +105,7 @@ app.post('/twitter/changeurl', (req, res) => {
         url: url
       }, {merge: true});
     } catch (e) {
-        res.redirect('/');
+        res.redirect(req.session.directory);
     }
     redirectToLogged(res);
 });

@@ -33,6 +33,8 @@ npm i;
     "secretCookie": null,
 ```
 
+3. 1. (Optional)If you're planning to deploy the server behind a reverse proxy, you should pass the real path of the app through the `X-Real-Directory` header
+
 4. Launch the server with `node index.js`
 
 ### Syncing function
